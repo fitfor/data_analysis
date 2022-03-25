@@ -1,2 +1,3 @@
 # data_analysis
-Data Analysis and Microservice for the frontend
+This repository provides data analysis and the ML-Backend of our data app.
+
