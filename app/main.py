@@ -19,9 +19,10 @@ ass_rules = pd.read_pickle(ass_rules_path)
 ####
 # define necessary methods
 def get_recommendation(activities: list):
+    import random
     activities = set(activities)
     query_get_matches = ass_rules['antecedents'].apply(lambda ant: set(ant).issubset(activities))
-    query_remove_neg_lev = ass_rules['leverage'] <= 0
+    query_remove_neg_lev = ass_rules['leverage'] >= 0
 
     ass_rules_queried = ass_rules[query_get_matches]
     ass_rules_queried = ass_rules[query_remove_neg_lev]
@@ -29,7 +30,10 @@ def get_recommendation(activities: list):
     ass_rules_queried = ass_rules_queried.sort_values(by='confidence', ascending=False)
     ass_rules_queried = ass_rules_queried.reset_index(drop=True)
 
-    ass_rules_queried = ass_rules_queried.loc[:4, ['consequents', 'confidence']]
+    num_rules = ass_rules_queried.shape[0]
+    random_rows_index = random.sample(range(0, num_rules), 4)
+
+    ass_rules_queried = ass_rules_queried.loc[random_rows_index, ['consequents', 'confidence']]
 
     query_duplicates = (ass_rules_queried['consequents'].duplicated() == False)
     ass_rules_queried = ass_rules_queried[query_duplicates]
