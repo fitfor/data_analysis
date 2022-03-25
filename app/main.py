@@ -8,7 +8,7 @@ from flask import request
 
 ####
 # Global Var
-ass_rules_path = 'ass_rules_v1.pkl'
+ass_rules_path = 'data/ass_rules_v1.pkl'
 
 
 ####
